@@ -19,6 +19,69 @@ A full-stack hospital management and emergency response application built using 
 - **Database:** SQL / MySQL
 - **Frontend:** HTML, CSS, Bootstrap, JavaScript
 - **Machine Learning:** Emergency risk classification
+- 
+- ## System Workflow
+```text
+                    LOGIN
+                      |
+                      v
+                  DASHBOARD
+                      |
+       +--------------+--------------+
+       |              |              |
+       v              v              v
+ HOSPITAL         PATIENT         DOCTOR
+ MANAGEMENT      MANAGEMENT      MANAGEMENT
+       |              |              |
+       v              |              v
+   HOSPITAL           |          APPOINTMENTS
+       |              |              |
+       +-------+------+              v
+               |                 PRESCRIPTION
+               v
+         DEPARTMENTS
+               |
+       +-------+--------+
+       |       |        |
+       v       v        v
+   EMERGENCY CARDIOLOGY NEUROLOGY
+               |
+               v
+          BED MANAGEMENT
+               |
+       +-------+--------+
+       |       |        |
+       v       v        v
+    ICU-01  ICU-02  GENERAL-01
+
+
+       EMERGENCY RESPONSE
+               |
+               v
+       EMERGENCY REQUEST
+               |
+               v
+        PATIENT DETAILS
+               |
+               v
+       AI RISK PREDICTION
+               |
+               v
+      DOCTOR / STAFF REVIEW
+               |
+               v
+       EMERGENCY MANAGEMENT
+
+
+       PRESCRIPTION
+             |
+             v
+       BILLING MANAGEMENT
+             |
+             v
+       BILL / PAYMENT STATUS
+```
+
 
 ## Installation
 
