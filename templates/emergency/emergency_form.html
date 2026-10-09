@@ -1,0 +1,177 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>create emergency request</title>
+</head>
+<body>
+     <h1>🚨 Emergency Request</h1>
+     <p>Please Enter Your Emergency Information..</p>
+     <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Submit Emergency Request</button>
+     </form>
+     <br>
+     <a href="{% url 'dashboard' %}">Back to Dashboard </a>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Request</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #eef6fc;
+        }
+
+        .navbar {
+            background: #14558a;
+        }
+
+        .main-box {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
+        }
+
+        .left {
+            background: #eaf5ff;
+            padding: 45px;
+        }
+
+        .left h1 {
+            color: #14558a;
+            font-weight: 700;
+        }
+
+        .left h1 span {
+            color: #e63950;
+        }
+
+        .alarm {
+            font-size: 100px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .right {
+            padding: 45px;
+        }
+
+        .right h2 {
+            color: #14558a;
+            font-weight: 700;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        form label {
+            display: block;
+            font-weight: 600;
+            color: #174a72;
+            margin-bottom: 6px;
+        }
+
+        form input,
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #cbdceb;
+            border-radius: 9px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: 0;
+            padding: 13px;
+            border-radius: 9px;
+            background: #ef334c;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background: #d92740;
+        }
+
+        .back {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid px-4">
+            <a href="{% url 'dashboard' %}" class="navbar-brand fw-bold fs-4">🏥 Hospital Management</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-light">Logout</a>
+        </div>
+    </nav>
+    <!-- Main -->
+    <div class="main-box">
+        <div class="row g-0">
+            <!-- LEFT -->
+            <div class="col-md-4 left">
+                <div class="alarm">🚨</div>
+                <h1>Emergency<br>
+                    <span>Request</span>
+                </h1>
+                <p class="text-muted fs-6 mt-3">
+                    Your health matters.
+                    Provide the details below so
+                    we can respond quickly and
+                    get you the help you need.
+                </p>
+                <div class="mt-4">
+                    <p> 🕐 <b>Quick Response</b><br>
+                        <small class="text-muted"> We prioritize urgent cases</small>
+                    </p>
+                    <p>🛡️ <b>Better Care</b><br>
+                        <small class="text-muted"> Get connected to the right hospital</small>
+                    </p>
+                    <p>❤️ <b>Save Lives</b><br>
+                        <small class="text-muted">Every second counts</small>
+                    </p>
+                </div>
+            </div>
+            <!-- RIGHT -->
+            <div class="col-md-8 right">
+                <h2>🚑 Emergency Information</h2>
+                <p class="text-muted">
+                    Please fill in the details below to submit
+                    your emergency request.
+                </p>
+                <hr class="mb-4">
+                <form method="POST">
+
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="submit-btn mt-1 update-btn" style="width: 80%;height:50px;">🚑
+                            Submit Emergency Request</button>
+                        <a href="{% url 'dashboard' %}" class="btn btn-success" style="width: 20%;height: 51px;">← Back
+                            to Dashboard</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

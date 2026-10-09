@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Patient Profile</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #eaf4ff, #f8fbff);
+            min-height: 100vh;
+        }
+
+        .profile-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #0d6efd, #00a8ff);
+            color: white;
+            padding: 35px;
+        }
+
+        .profile-icon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            margin: 0 auto 15px;
+            border: 3px solid rgba(255, 255, 255, .7);
+        }
+
+        .form-box {
+            padding: 35px;
+        }
+
+        .form-box p {
+            margin-bottom: 18px;
+        }
+
+        .form-box label {
+            font-weight: 600;
+            color: #344054;
+            margin-bottom: 7px;
+            display: block;
+        }
+
+        .form-box input,
+        .form-box select,
+        .form-box textarea {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #d9e2ec;
+            border-radius: 10px;
+            background: #f9fbfd;
+        }
+
+        .form-box input:focus,
+        .form-box select:focus,
+        .form-box textarea:focus {
+            outline: none;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, .1);
+            background: white;
+        }
+
+        .update-btn {
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-weight: 600;
+        }
+
+        .cancel-btn {
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-7 col-md-9">
+
+                <div class="card profile-card">
+
+                    <!-- Header -->
+                    <div class="profile-header text-center">
+
+                        <div class="profile-icon">
+                            👤
+                        </div>
+
+                        <h2 class="fw-bold mb-1">
+                            Edit Patient Profile
+                        </h2>
+
+                        <p class="mb-0">
+                            Update your personal and medical information
+                        </p>
+
+                    </div>
+
+                    <!-- Form -->
+                    <div class="form-box">
+
+                        <form method="POST" enctype="multipart/form-data">
+
+                            {% csrf_token %}
+
+                            {{ form.as_p }}
+
+                            <div class="d-flex gap-2 mt-4">
+
+                                <button type="submit" class="btn btn-primary update-btn flex-grow-1">
+                                    ✓ Update Profile
+                                </button>
+
+                                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary cancel-btn">
+                                    Cancel
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                        <div class="text-center text-muted small mt-4">
+                            🔒 Your information is secure and private
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

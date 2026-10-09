@@ -1,0 +1,31 @@
+oxygen_level,heart_rate,temperature,systolic_bp,diastolic_bp,emergency_type,risk_level
+99,70,98.2,120,80,General,LOW
+98,75,98.4,118,78,General,LOW
+97,82,98.6,125,82,General,LOW
+96,88,99.0,130,85,Fever,LOW
+95,92,99.2,135,88,Fever,MEDIUM
+94,98,99.5,140,90,Fever,MEDIUM
+93,105,100.1,145,92,Breathing Problem,MEDIUM
+92,110,100.5,150,95,Breathing Problem,MEDIUM
+91,115,101.0,155,98,Breathing Problem,HIGH
+90,120,101.5,160,100,Breathing Problem,HIGH
+88,130,102.0,165,105,Breathing Problem,HIGH
+85,140,103.0,170,110,Breathing Problem,HIGH
+99,72,98.3,122,80,Chest Pain,LOW
+96,95,98.8,135,85,Chest Pain,MEDIUM
+93,108,99.5,145,92,Chest Pain,MEDIUM
+90,125,100.5,160,100,Chest Pain,HIGH
+87,135,101.5,175,110,Chest Pain,HIGH
+98,80,98.5,120,80,Accident,LOW
+94,100,99.0,135,88,Accident,MEDIUM
+91,115,100.0,150,95,Accident,MEDIUM
+88,130,101.0,165,105,Accident,HIGH
+84,145,102.5,180,115,Accident,HIGH
+99,78,98.4,118,78,Bleeding,LOW
+95,98,99.0,125,80,Bleeding,MEDIUM
+90,115,99.8,105,70,Bleeding,HIGH
+86,135,100.5,90,60,Bleeding,HIGH
+82,150,101.5,85,55,Bleeding,HIGH
+99,68,98.1,120,80,Unconscious,HIGH
+90,120,99.5,100,65,Unconscious,HIGH
+85,140,100.5,90,60,Unconscious,HIGH

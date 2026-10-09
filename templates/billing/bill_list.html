@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hospital Bills</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="fw-bold mb-1">
+                    💰 Hospital Bills
+                </h2>
+                {% if request.user.profile.Role == 'HOSPITAL_ADMIN' %}
+                <p class="text-muted mb-0">
+                    Manage completed appointments and generate bills
+                </p>
+                {% else %}
+                <p class="text-muted mb-0">
+                    View your hospital bills
+                </p>
+                {% endif %}
+            </div>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                ← Dashboard
+            </a>
+        </div>
+
+        <!-- ================= ADMIN ================= -->
+        {% if request.user.profile.Role == 'HOSPITAL_ADMIN' %}
+
+        <div class="card border-0 shadow rounded-4 mt-4">
+            <div class="card-body p-6">
+                <h4 class="fw-bold mb-3">🚨 Appointment Bills</h4>
+
+                {% if appointments %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold">
+                                    👤 {{ appointment.patient.patient_name }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold">
+                                        👨‍⚕️{{ appointment.doctor.user.username }}
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ appointment.appointment_date|date:"M d, Y" }}
+                                </td>
+                                <td>
+                                    {{ appointment.appointment_time|time:"h:i A" }}
+                                </td>
+                                <td>
+                                    <span class="text-muted">
+                                        {{ appointment.reason }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary rounded-pill px-3 py-2">
+                                        ✓ Completed
+                                    </span>
+                                </td>
+
+                                <td class="text-center">
+                                    {% with bill=appointment.bills.first %}
+                                    {% if bill %}
+                                    <span class="badge bg-success rounded-pill px-3 py-2">
+                                        ✓ Bill Generated
+                                    </span>
+
+                                    <a href="{% url 'bill_detail' bill.id %}" class="btn btn-primary btn-sm rounded-3">
+                                        View Bill
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'create_appointment_bill' appointment.id %}"
+                                        class="btn btn-success btn-sm rounded-3">
+                                        💰 Generate Bill
+                                    </a>
+                                    {% endif %}
+                                    {% endwith %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% else %}
+
+                <div class="text-center py-5">
+                    <div class="display-4 mb-3">
+                        💰
+                    </div>
+                    <h4 class="fw-bold">
+                        No completed appointments
+                    </h4>
+                    <p class="text-muted">
+                        There are no completed appointments available for billing.
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- EMERGENCY REQUESTS -->
+        <div class="card border-0 shadow rounded-4 mt-4">
+            <div class="card-body p-4">
+
+                <h4 class="fw-bold mb-3">🚨 Emergency Requests Bills</h4>
+
+                {% if emergencies %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Emergency Type</th>
+                                <th>Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for emergency in emergencies %}
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold">
+                                        👤{{ emergency.patient.patient_name }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold">
+                                        {% if emergency.doctor %}
+                                        👨‍⚕️{{ emergency.doctor.user.username }}
+                                        {% else %}
+                                        Not Assigned
+                                        {% endif %}
+                                    </div>
+                                </td>
+
+                                <td>
+                                    {{ emergency.emergency_type }}
+                                </td>
+
+                                <td>
+                                    {{ emergency.status }}
+                                </td>
+
+                                <td class="text-center">
+                                    {% with bill=emergency.bills.first %}
+                                    {% if bill %}
+                                    <span class="badge bg-success rounded-pill px-3 py-2">
+                                        ✓ Bill Generated
+                                    </span>
+
+                                    <a href="{% url 'bill_detail' bill.id %}" class="btn btn-primary btn-sm rounded-3">
+                                        View Bill
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'create_bill' emergency.id %}"
+                                        class="btn btn-danger btn-sm rounded-3">
+                                        💰 Generate Bill
+                                    </a>
+                                    {% endif %}
+                                    {% endwith %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center py-3">
+                    No emergency requests found.
+                </p>
+                {% endif %}
+
+            </div>
+        </div>
+        <!-- ================= PATIENT ================= -->
+
+        {% elif request.user.profile.Role == 'PATIENT' %}
+        <div class="card border-0 shadow rounded-4">
+            <div class="card-body p-4">
+                {% if bills %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Bill ID</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bill in bills %}
+                            <tr>
+                                <td>
+                                    <span class="fw-semibold">
+                                        #{{ bill.id }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {{ bill.created_at|date:"M d, Y" }}
+                                </td>
+                                <!-- Bill Type -->
+                                <td>
+                                    {% if bill.emergency %}
+                                    <span class="badge bg-danger rounded-pill px-3 py-2">
+                                        🚨 Emergency
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-primary rounded-pill px-3 py-2">
+                                        📅 Appointment
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <!-- Amount -->
+                                <td>
+                                    <strong>
+                                        ₹{{ bill.total_amount }}
+                                    </strong>
+                                </td>
+                                <!-- Status -->
+                                <td>
+
+                                    {% if bill.status == 'PAID' %}
+                                    <span class="badge bg-success rounded-pill px-3 py-2">
+                                        ✓ Paid
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-dark rounded-pill px-3 py-2">
+                                        ⏳ Pending
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <!-- Action -->
+                                <td class="text-center">
+                                    <a href="{% url 'bill_detail' bill.id %}" class="btn btn-primary btn-sm rounded-3">
+                                        👁 View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <div class="display-4 mb-3">
+                        💰
+                    </div>
+                    <h4 class="fw-bold">
+                        No bills found
+                    </h4>
+                    <p class="text-muted">
+                        Your hospital bills will appear here.
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

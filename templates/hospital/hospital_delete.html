@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Hospital</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #eef6fb;
+        }
+
+        .delete-card {
+            max-width: 500px;
+            margin: 100px auto;
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .1);
+        }
+
+        .icon {
+            font-size: 65px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #dc3545;
+            font-weight: 700;
+        }
+
+        .hospital-name {
+            color: #1677b8;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="delete-card">
+        <div class="icon">🗑️</div>
+        <h2>Delete Hospital?</h2>
+
+        <p class="text-muted mt-3">Are you sure you want to delete</p>
+        <h4 class="hospital-name">{{ hospital.Name }}</h4>
+        <p class="text-muted">This action cannot be undone.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-danger px-4">🗑️ Yes, Delete</button>
+            <a href="{% url 'hospital_detail' hospital.id %}" class="btn btn-secondary px-4 ms-2">Cancel</a>
+        </form>
+    </div>
+</body>
+
+</html>

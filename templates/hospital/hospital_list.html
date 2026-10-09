@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #eef6fb;
+        }
+
+        .navbar {
+            background: #1677b8;
+        }
+
+        .main {
+            width: 95%;
+            margin: 40px auto;
+        }
+
+        .hospital-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+            height: 100%;
+            transition: .2s;
+        }
+
+        .hospital-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hospital-img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 22px;
+        }
+
+        .hospital-name {
+            color: #1677b8;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4">🏥 Hospital Management</a>
+            <div class="d-flex gap-2">
+                <a href="{% url 'hospital_form' %}" class="btn btn-light">+ Add Hospital</a>
+                <a href="{% url 'dashboard' %}" class="btn btn-success">← Dashboard</a>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        {% if hospitals %}
+        <div class="row g-4">
+            {% for hospital in hospitals %}
+            <div class="col-md-6 col-lg-3">
+                <div class="hospital-card">
+                    {% if hospital.image %}
+                    <img src="{{ hospital.image.url }}" class="hospital-img" alt="{{ hospital.Name }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80"
+                        class="hospital-img" alt="Hospital">
+                    {% endif %}
+                    <div class="card-body">
+                        <h3 class="hospital-name">🏥 {{ hospital.Name }}</h3>
+                        <p class="text-muted mb-2">📍 {{ hospital.City }}</p>
+                        <p>{{ hospital.Address }}</p>
+                        <hr>
+                        <p class="mb-1">📞 {{ hospital.Phone_no }}</p>
+                        <p class="mb-1">✉️ {{ hospital.Email }}</p>
+                        <p class="mb-1">🛏️ Total Beds:
+                            <strong>{{ hospital.Total_Beds }}</strong>
+                        </p>
+                        <p>🟢 Available Beds:
+                            <strong>{{ hospital.Available_beds }}</strong>
+                        </p>
+                        {% if hospital.Emerg_Available %}
+                        <span class="badge bg-success">Emergency Available</span>
+                        {% else %}
+                        <span class="badge bg-danger">Emergency Unavailable</span>
+                        {% endif %}
+                        <div class="mt-3">
+                            <a href="{% url 'hospital_detail' hospital.id %}" class="btn btn-primary btn-sm">View
+                                Details</a>
+                            <a href="{% url 'update' hospital.id %}" class="btn btn-warning btn-sm"> Update</a>
+                            <a href="{% url 'delete' hospital.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center mt-5">
+            <h3>No Hospital Available</h3>
+            <a href="{% url 'hospital_form' %}" class="btn btn-primary mt-2">+ Add Hospital</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

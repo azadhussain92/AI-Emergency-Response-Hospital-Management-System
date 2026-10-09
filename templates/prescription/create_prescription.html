@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Prescription</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="card shadow rounded-4 mx-auto" style="max-width:800px;">
+            <div class="card-body p-4">
+                <h2>💊 Create Prescription</h2>
+                <hr>
+                <div class="mb-4">
+                    <p>
+                        <strong>Patient:</strong>
+                        {{ emergency.patient.patient_name }}
+                    </p>
+                    <p>
+                        <strong>Emergency:</strong>
+                        {{ emergency.get_emergency_type_display }}
+                    </p>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ prescription_form.as_p }}
+                    <h4>Medicines</h4>
+                    {{ medicine_formset.management_form }}
+                    <div id="medicine-container">
+                        {% for form in medicine_formset %}
+                        <div class="medicine-form border rounded p-3 mb-3">
+                            {{ form.as_p }}
+                            <button type="button" class="btn btn-danger btn-sm remove-medicine">
+                                Remove
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" id="add-medicine" class="btn btn-success">
+                        + Add Medicine
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Save Prescription
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- <script>
+
+        const container = document.getElementById('medicine-container');
+        const addButton = document.getElementById('add-medicine');
+
+        const totalForms = document.getElementById(
+            'id_medicines-TOTAL_FORMS'
+        );
+        addButton.addEventListener('click', function () {
+            let formCount = parseInt(totalForms.value);
+            let firstForm = container.querySelector('.medicine-form');
+            let newForm = firstForm.cloneNode(true);
+            newForm.innerHTML = newForm.innerHTML.replace(
+                /-0-/g,
+                `-${formCount}-`
+            );
+            newForm.innerHTML = newForm.innerHTML.replace(
+                /_0_/g,
+                `_${formCount}_`
+            );
+            newForm.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+            container.appendChild(newForm);
+            totalForms.value = formCount + 1;
+        });
+        container.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-medicine')) {
+                e.target.closest('.medicine-form').remove();
+            }
+        }); -->
+    <!-- </script> -->
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Doctors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <!-- <div class="container mt-5"> -->
+    <div class="container-fluid mt-3 px-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>👨‍⚕️ Registered Doctors</h2>
+
+            <a href="{% url 'dashboard' %}" class="btn btn-primary">
+                ← Dashboard
+            </a>
+        </div>
+
+        <div class="row g-4">
+
+            {% for doctor in doctors %}
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="card shadow rounded-4 h-100 ">
+
+                    {% if doctor.image %}
+                    <img src="{{ doctor.image.url }}" class="card-img-top" style="height:220px; object-fit:cover;">
+                    {% endif %}
+
+                    <div class="card-body">
+
+                        <h4>👨‍⚕️ {{ doctor.user.username }}</h4>
+
+                        <p>
+                            <strong>Hospital:</strong>
+                            {{ doctor.hospital.Name }}
+                        </p>
+
+                        <p>
+                            <strong>Department:</strong>
+                            {{ doctor.department.name }}
+                        </p>
+
+                        <p>
+                            <strong>Specialization:</strong>
+                            {{ doctor.specialization }}
+                        </p>
+
+                        <p>
+                            <strong>Qualification:</strong>
+                            {{ doctor.qualification }}
+                        </p>
+
+                        <p>
+                            <strong>Experience:</strong>
+                            {{ doctor.experience_year }} years
+                        </p>
+
+                        <p>
+                            <strong>Phone:</strong>
+                            {{ doctor.phone }}
+                        </p>
+
+                        {% if doctor.is_available %}
+                        <span class="badge bg-success">
+                            🟢 Available
+                        </span>
+                        {% else %}
+                        <span class="badge bg-danger">
+                            🔴 Not Available
+                        </span>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="text-center">
+                <h4>No Doctors Registered</h4>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

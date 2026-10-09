@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Risk Predictions</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            color: white;
+            padding: 28px 35px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.15);
+        }
+
+        .page-header h2 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            margin: 6px 0 0;
+            opacity: 0.85;
+        }
+
+        .prediction-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .table {
+            margin: 0;
+            vertical-align: middle;
+        }
+
+        .table thead th {
+            background: #f1f5f9;
+            color: #495057;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding: 16px;
+            border: none;
+        }
+
+        .table tbody td {
+            padding: 17px 16px;
+            border-color: #edf0f3;
+        }
+
+        .table tbody tr:hover {
+            background: #f8fbff;
+        }
+
+        .risk-badge {
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .risk-high {
+            background: #ffe0e0;
+            color: #dc3545;
+        }
+
+        .risk-medium {
+            background: #fff0c2;
+            color: #997404;
+        }
+
+        .risk-low {
+            background: #d9f7e5;
+            color: #198754;
+        }
+
+        .probability {
+            font-weight: 700;
+            color: #0d6efd;
+        }
+
+        .model-badge {
+            background: #e8f1ff;
+            color: #0d6efd;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .empty-box {
+            padding: 45px;
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .empty-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 22px;
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 15px;
+            }
+
+            .prediction-card {
+                padding: 15px;
+            }
+
+            .table {
+                min-width: 800px;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+
+        <!-- Header -->
+        <div class="page-header">
+            <h2>⚠️ Risk Predictions</h2>
+            <p>Monitor emergency risk levels and prediction results</p>
+        </div>
+        <div class="mt-2">
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                ← Back to Dashboard
+            </a>
+        </div>
+
+        <!-- Table Card -->
+        <div class="prediction-card">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h5 class="fw-bold mb-1">Emergency Risk Analysis</h5>
+                    <small class="text-muted">
+                        AI-based emergency risk predictions
+                    </small>
+                </div>
+
+                <span class="badge bg-primary px-3 py-2">
+                    Risk Analysis
+                </span>
+            </div>
+
+
+            <div class="table-container">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Risk Level</th>
+                            <th>Probability</th>
+                            <th>Model</th>
+                            <th>Date</th>
+                            <th>Emergency ID</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for p in prediction %}
+
+                        <tr>
+
+                            <td>
+                                <strong>#{{ p.id }}</strong>
+                            </td>
+
+                            <td>
+
+                                {% if p.risk_level == 'HIGH' %}
+
+                                <span class="risk-badge risk-high">
+                                    🔴 HIGH
+                                </span>
+
+                                {% elif p.risk_level == 'MEDIUM' %}
+
+                                <span class="risk-badge risk-medium">
+                                    🟡 MEDIUM
+                                </span>
+
+                                {% else %}
+
+                                <span class="risk-badge risk-low">
+                                    🟢 LOW
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                <span class="probability">
+                                    {{ p.probability }}%
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="model-badge">
+                                    {{ p.model_name }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="text-muted">
+                                    {{ p.created_at|date:"d M Y, h:i A" }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="badge bg-secondary">
+                                    #{{ p.emergency_request_id }}
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="6">
+
+                                <div class="empty-box">
+
+                                    <div class="empty-icon">
+                                        🩺
+                                    </div>
+
+                                    <h5 class="fw-bold">
+                                        No Risk Prediction Available
+                                    </h5>
+
+                                    <p class="mb-0">
+                                        Risk predictions will appear here
+                                        after an emergency request is submitted.
+                                    </p>
+
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

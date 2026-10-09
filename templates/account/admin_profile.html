@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Admin Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card shadow rounded-4">
+            <div class="card-body p-4">
+                <h2 class="mb-4">
+                    👤 Admin Profile
+                </h2>
+
+                <!-- Profile Image -->
+                <div class="text-center mb-4">
+                    {% if profile.image %}
+
+                    <img src="{{ profile.image.url }}" style="width:200px;height:220px;border-radius:50%;object-fit:cover;
+                         border:4px solid #0d6efd;">
+                    {% else %}
+
+                    <div
+                        style="width:130px;height:130px;border-radius:50%;background:#e9ecef;display:flex;align-items:center;justify-content:center;margin:auto;font-size:60px;">
+                        👤
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Admin Information -->
+                <p>
+                    <strong>👤 Username:</strong>
+                    {{ profile.UserName }}
+                </p>
+                <p>
+                    <strong>🛡️ Role:</strong>
+                    {{ profile.Role }}
+                </p>
+                <p>
+                    <strong>📞 Phone:</strong>
+                    {{ profile.Phone }}
+                </p>
+                <p>
+                    <strong>📅 Account Created:</strong>
+                    {{ profile.Created_at }}
+                </p>
+                <hr>
+                <!-- Statistics -->
+                <h5 class="mb-3">📊 System Statistics</h5>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="card text-center shadow-sm p-3">
+                            <h3>🏥</h3>
+                            <strong>Hospitals</strong>
+                            <h4>{{ hospital_count }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center shadow-sm p-3">
+                            <h3>👨‍⚕️</h3>
+                            <strong>Doctors</strong>
+                            <h4>{{ doctor_count }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center shadow-sm p-3">
+                            <h3>🧑‍🤝‍🧑</h3>
+                            <strong>Patients</strong>
+                            <h4>{{ patient_count }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center shadow-sm p-3">
+                            <h3>🚑</h3>
+                            <strong>Emergency</strong>
+                            <h4>{{ emergency_count }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <!-- Edit Profile -->
+                <h5 class="mb-3">✏️ Edit Profile</h5>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Admin Image
+                        </label>
+                        {{ form.image }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">
+                            📞 Phone
+                        </label>
+                        {{ form.Phone }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        💾 Update Profile
+                    </button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                        ← Back to Dashboard
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

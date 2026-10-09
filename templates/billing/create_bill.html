@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Bill</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="card shadow rounded-4 mx-auto" style="max-width:700px;">
+            <div class="card-body p-4">
+                <h2>💰 Create Hospital Bill</h2>
+                <hr>
+                <p>
+                    <strong>Patient:</strong>
+                    {{ patient.patient_name }}
+                </p>
+                <p>
+                    <strong>Emergency:</strong>
+                    {{ emergency.get_emergency_type_display }}
+                </p>
+                <hr>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Consultation Charge
+                        </label>
+                        {{ form.consultation_charge }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Medicine Charge
+                        </label>
+                        {{ form.medicine_charge }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Bed Charge
+                        </label>
+                        {{ form.bed_charge }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Lab Charge
+                        </label>
+                        {{ form.lab_charge }}
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">
+                            Other Charge
+                        </label>
+                        {{ form.other_charge }}
+                    </div>
+                    <button class="btn btn-success">
+                        💾 Generate Bill
+                    </button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                        Back
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

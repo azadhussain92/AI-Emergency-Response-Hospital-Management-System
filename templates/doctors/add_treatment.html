@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Treatment</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"rel="stylesheet"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow rounded-4">
+            <div class="card-body p-4">
+                <h2>📝 Treatment Record</h2>
+                <hr>
+                <p>
+                    <strong>Patient:</strong>
+                    {{ emergency.patient.patient_name }}
+                </p>
+                <p>
+                    <strong>Emergency:</strong>
+                    {{ emergency.get_emergency_type_display }}
+                </p>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">Diagnosis</label>
+                        <input type="text" name="diagnosis" class="form-control" placeholder="Enter diagnosis"
+                            value="{{ form.diagnosis.value|default:'' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Treatment</label>
+                        <textarea name="treatment" class="form-control" rows="4"
+                            placeholder="Enter treatment">{{ form.treatment.value|default:'' }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Medicines</label>
+                        <textarea name="medicines" class="form-control" rows="3"
+                            placeholder="Enter medicines">{{ form.medicines.value|default:'' }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Additional Notes</label>
+                        <textarea name="notes" class="form-control" rows="3"
+                            placeholder="Additional notes">{{ form.notes.value|default:'' }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        💾 Save Treatment
+                    </button>
+                    <a href="{% url 'my_patients' %}" class="btn btn-secondary">← Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

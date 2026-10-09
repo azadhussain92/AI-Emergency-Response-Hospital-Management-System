@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Doctor Profile</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #eef6fc;
+        }
+
+        .navbar {
+            background: #1677b8;
+        }
+
+        .main-card {
+            max-width: 1150px;
+            margin: 45px auto;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
+        }
+
+        .doctor-side {
+            background: #eaf5ff;
+            padding: 50px 40px;
+        }
+
+        .doctor-side h1 {
+            color: #124b80;
+            font-weight: 700;
+        }
+
+        .doctor-icon {
+            font-size: 110px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-side {
+            padding: 45px;
+        }
+
+        .form-side h2 {
+            color: #124b80;
+            font-weight: 700;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        form label {
+            display: block;
+            font-weight: 600;
+            color: #234;
+            margin-bottom: 6px;
+        }
+
+        form input,
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d5e2ec;
+            border-radius: 8px;
+        }
+
+        form input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .update-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: #1682c5;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .update-btn:hover {
+            background: #126da5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold fs-4" href="{% url 'doctor_dashboard' %}">🏥 Hospital Management</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-light">Logout</a>
+        </div>
+    </nav>
+
+    <div class="main-card">
+        <div class="row g-0">
+            <!-- LEFT -->
+            <div class="col-md-4 doctor-side">
+                <div class="doctor-icon">👨‍⚕️</div>
+                <h1>Edit Profile</h1>
+                <p class="text-muted fs-5 mt-3">
+                    Update your doctor information
+                    and keep your profile up to date.
+                </p>
+                <div class="fs-1 mt-5">💙</div>
+            </div>
+            <!-- RIGHT -->
+            <div class="col-md-8 form-side">
+                <h2>✏️ Edit Doctor Profile</h2>
+                <p class="text-muted">Update your information below.</p>
+                <hr class="mb-4">
+                <form method="POST" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+                    <label>Username</label>
+                    <input type="text" name="username" value="{{ request.user.username }}" required>
+                    {{ form.as_p }}
+
+                    <button type="submit" class="update-btn mt-2">
+                        💾 Update Profile
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

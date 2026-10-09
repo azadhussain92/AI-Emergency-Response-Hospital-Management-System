@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h2>📅 Appointments</h2>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                Back Dashboard
+            </a>
+            <!-- <p>
+                Current Role: {{ request.user.profile.Role }}
+            </p> -->
+        </div>
+        {% if appointments %}
+
+        <div class="card shadow rounded-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                {% if request.user.profile.Role == 'PATIENT' %}
+                                <th>Doctor</th>
+                                {% else %}
+                                <th>Patient</th>
+                                {% endif %}
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                {% if request.user.profile.Role == 'DOCTOR' %}
+                                <th>Action</th>
+                                {% elif request.user.profile.Role == 'HOSPITAL_ADMIN' %}
+                                <th>Action</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                            <tr>
+                                <!-- PATIENT / DOCTOR / ADMIN -->
+                                {% if request.user.profile.Role == 'PATIENT' %}
+                                <td>
+                                    Dr. {{ appointment.doctor.user.username }}
+                                </td>
+                                {% else %}
+                                <td>
+                                    {{ appointment.patient.patient_name }}
+                                </td>
+                                {% endif %}
+                            <!-- DATE -->
+
+                                <td>
+                                    {{ appointment.appointment_date|date:"M d, Y" }}
+                                </td>
+                                <!-- TIME -->
+                                <td>
+                                    {{ appointment.appointment_time|time:"h:i A" }}
+                                </td>
+                            <!-- REASON -->
+                                <td>
+                                    {{ appointment.reason }}
+                                </td>
+                                <!-- STATUS -->
+                                <td>
+                                    {% if appointment.status == 'PENDING' %}
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+                                    {% elif appointment.status == 'CONFIRMED' %}
+                                    <span class="badge bg-success">
+                                        Confirmed
+                                    </span>
+                                    {% elif appointment.status == 'COMPLETED' %}
+                                    <span class="badge bg-primary">
+                                        Completed
+                                    </span>
+                                    {% elif appointment.status == 'CANCELLED' %}
+                                    <span class="badge bg-danger">
+                                        Cancelled
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <!-- DOCTOR ACTION -->
+                                {% if request.user.profile.Role == 'DOCTOR' %}
+                                <td>
+                                    {% if appointment.status == 'PENDING' %}
+                                    <form method="POST" action="{% url 'update_appointment_status' appointment.id %}"class="d-inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="status" value="CONFIRMED">
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            ✓ Confirm
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{% url 'update_appointment_status' appointment.id %}"class="d-inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="status" value="CANCELLED">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            ✕ Cancel
+                                        </button>
+                                    </form>
+                                    {% elif appointment.status == 'CONFIRMED' %}
+                                    <form method="POST" action="{% url 'update_appointment_status' appointment.id %}"
+                                        class="d-inline">
+
+                                        {% csrf_token %}
+                                        <input type="hidden" name="status" value="COMPLETED">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            ✓ Complete
+                                        </button>
+                                    </form>
+                                    {% elif appointment.status == 'COMPLETED' %}
+                                    <span class="text-success">
+                                        ✓ Completed
+                                    </span>
+                                    {% elif appointment.status == 'CANCELLED' %}
+                                    <span class="text-danger">
+                                        ✕ Cancelled
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <!-- HOSPITAL ADMIN ACTION -->
+
+                                {% elif request.user.profile.Role == 'HOSPITAL_ADMIN' %}
+                                <td>
+                                    {% if appointment.status == 'COMPLETED' %}
+                                    <a href="{% url 'create_appointment_bill' appointment.id %}"class="btn btn-success btn-sm">
+                                        💰 Generate Bill
+                                    </a>
+                                    {% else %}
+                                    <span class="text-muted">
+                                        —
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    No appointments found.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            No appointments found.
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

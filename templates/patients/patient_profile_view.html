@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Profile</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f8fc;
+            min-height: 100vh;
+        }
+
+        .profile-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #0d6efd, #00a8ff);
+            color: white;
+            padding: 35px 20px;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+        }
+
+        .default-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: white;
+            color: #0d6efd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+            margin: auto;
+            border: 5px solid rgba(255, 255, 255, .8);
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid #e5eaf0;
+            border-radius: 12px;
+            padding: 16px;
+            height: 100%;
+        }
+
+        .info-label {
+            font-size: 13px;
+            color: #7b8794;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #263238;
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: #263238;
+        }
+
+        .badge-custom {
+            font-size: 13px;
+            padding: 7px 12px;
+        }
+
+        .btn {
+            border-radius: 10px;
+            font-weight: 600;
+            padding: 11px 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-9 col-xl-8">
+
+                <div class="card profile-card">
+
+                    <!-- Header -->
+                    <div class="profile-header text-center">
+
+                        {% if patient.image %}
+
+                        <img src="{{ patient.image.url }}" alt="Patient" class="profile-image">
+
+                        {% else %}
+
+                        <div class="default-image">
+                            👤
+                        </div>
+
+                        {% endif %}
+
+                        <h2 class="fw-bold mt-3 mb-1">
+                            {{ patient.patient_name }}
+                        </h2>
+
+                        <p class="mb-0">
+                            Patient Profile
+                        </p>
+
+                    </div>
+
+
+                    <!-- Body -->
+                    <div class="card-body p-4 p-md-5">
+
+                        <h4 class="section-title mb-4">
+                            Personal Information
+                        </h4>
+
+                        <div class="row g-3">
+
+                            <!-- Name -->
+                            <div class="col-md-6">
+                                <div class="info-box">
+                                    <div class="info-label">
+                                        Patient Name
+                                    </div>
+
+                                    <div class="info-value">
+                                        {{ patient.patient_name }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- DOB -->
+                            <div class="col-md-6">
+                                <div class="info-box">
+                                    <div class="info-label">
+                                        Date of Birth
+                                    </div>
+
+                                    <div class="info-value">
+                                        {{ patient.date_of_birth|default:"Not provided" }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="col-md-6">
+                                <div class="info-box">
+                                    <div class="info-label">
+                                        Gender
+                                    </div>
+
+                                    <div class="info-value">
+                                        {{ patient.gender|default:"Not provided" }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="col-md-6">
+                                <div class="info-box">
+                                    <div class="info-label">
+                                        Phone Number
+                                    </div>
+
+                                    <div class="info-value">
+                                        {{ patient.phone_num }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Blood Group -->
+                            <div class="col-md-6">
+                                <div class="info-box">
+                                    <div class="info-label">
+                                        Blood Group
+                                    </div>
+
+                                    <div class="info-value">
+
+                                        {% if patient.blood_group %}
+                                        <span class="badge bg-danger badge-custom">
+                                            {{ patient.blood_group }}
+                                        </span>
+                                        {% else %}
+                                        Not provided
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Emergency Contact -->
+                            <div class="col-md-6">
+                                <div class="info-box">
+                                    <div class="info-label">
+                                        Emergency Contact
+                                    </div>
+
+                                    <div class="info-value">
+                                        {{ patient.emergency_contact }}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Address -->
+                        <h4 class="section-title mt-5 mb-3">
+                            Address
+                        </h4>
+
+                        <div class="info-box">
+                            <div class="info-value">
+                                {{ patient.address|default:"Not provided" }}
+                            </div>
+                        </div>
+
+
+                        <!-- Medical Information -->
+                        <h4 class="section-title mt-5 mb-3">
+                            Medical Information
+                        </h4>
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+                                Medical Conditions
+                            </div>
+
+                            <div class="info-value">
+                                {{ patient.medical_conditions|default:"No medical conditions provided" }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- Buttons -->
+                        <div class="d-flex flex-wrap gap-2 mt-5">
+
+                            <a href="{% url 'patient_profile_edit' %}" class="btn btn-primary">
+                                ✏️ Edit Profile
+                            </a>
+
+                            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+                                ← Dashboard
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

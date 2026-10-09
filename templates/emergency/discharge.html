@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Discharge Patient</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-5">
+
+        <div class="card shadow rounded-4">
+
+            <div class="card-body p-4">
+
+                <h2 class="mb-4">🏥 Discharge Patient</h2>
+
+                <p>
+                    <strong>Patient:</strong>
+                    {{ emergency.patient.patient_name }}
+                </p>
+
+                <p>
+                    <strong>Emergency Type:</strong>
+                    {{ emergency.emergency_type }}
+                </p>
+
+                <p>
+                    <strong>Hospital:</strong>
+                    {{ emergency.hospital.Name }}
+                </p>
+
+                <hr>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Discharge Notes
+                        </label>
+
+                        {{ form.discharge_notes }}
+
+                    </div>
+
+                    <button type="submit" class="btn btn-danger">
+                        ✅ Confirm Discharge
+                    </button>
+
+                    <a href="{% url 'emergency_detail' emergency.id %}" class="btn btn-secondary">
+                        ← Back
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

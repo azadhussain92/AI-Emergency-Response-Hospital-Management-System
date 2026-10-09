@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book Appointment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="card shadow rounded-4 mx-auto" style="max-width:700px;">
+            <div class="card-body p-4">
+                <h2>📅 Book Appointment</h2>
+                <hr>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show">
+                    <strong>✓ Success!</strong>
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert">
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form method="POST">
+
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.errors }}
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Doctor
+                        </label>
+                        {{ form.doctor }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Date
+                        </label>
+
+                        {{ form.appointment_date }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Time
+                        </label>
+                        {{ form.appointment_time }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Reason
+                        </label>
+                        {{ form.reason }}
+                    </div>
+
+                    <button class="btn btn-primary">
+                        📅 Book Appointment
+                    </button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back</a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        setTimeout(function () {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+</body>
+
+</html>

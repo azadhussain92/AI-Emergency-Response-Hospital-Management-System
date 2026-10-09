@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registered Patients</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <div class="container-fluid mt-5 px-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>🧑‍🤝‍🧑 Registered Patients</h2>
+
+            <a href="{% url 'dashboard' %}" class="btn btn-primary">
+                ← Dashboard
+            </a>
+        </div>
+
+        <div class="row g-3">
+
+            {% for patient in patients %}
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="card shadow rounded-4 h-100">
+
+                    {% if patient.image %}
+                    <img src="{{ patient.image.url }}" class="card-img-top" style="height:220px; object-fit:cover;">
+                    {% endif %}
+
+                    <div class="card-body">
+
+                        <h4>🧑 {{ patient.patient_name }}</h4>
+
+                        <p>
+                            <strong>Username:</strong>
+                            {{ patient.user.username }}
+                        </p>
+
+                        <p>
+                            <strong>Date of Birth:</strong>
+                            {{ patient.date_of_birth }}
+                        </p>
+
+                        <p>
+                            <strong>Gender:</strong>
+                            {{ patient.gender }}
+                        </p>
+
+                        <p>
+                            <strong>Phone:</strong>
+                            {{ patient.phone_num }}
+                        </p>
+
+                        <p>
+                            <strong>Blood Group:</strong>
+                            {{ patient.blood_group }}
+                        </p>
+
+                        <p>
+                            <strong>Address:</strong>
+                            {{ patient.address }}
+                        </p>
+
+                        <p>
+                            <strong>Medical Conditions:</strong>
+                            {{ patient.medical_conditions }}
+                        </p>
+
+                        <p>
+                            <strong>Emergency Contact:</strong>
+                            {{ patient.emergency_contact }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="text-center mt-5">
+                <h4>No Patients Registered</h4>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

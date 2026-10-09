@@ -1,0 +1,242 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Request</title>
+</head>
+<body>
+    <h1>Emergency Request</h1>
+    {% if request.user.profile.role == 'PATIENT' %}
+    <a href="{% url 'emergency_create' %}">🚨 Create Emergency Request</a>
+    {% endif %}
+    <hr>
+    {% if emergencies %}
+        {% for emergency in emergencies %}
+            <h3>Emergency #{{ emergency.id }}</h3>
+            <p>Type:{{ emergency.get_emergency_type_display }}</p>
+            <p>Status:{{ emergency.get_status_display }}</p>
+            <p>Create: {{ emergency.created_at }}</p>
+            <a href="{% url 'emergency_detail' emergency.id %}">View Details</a>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>no emergency found..</p>
+    {% endif %}
+    <br>
+    <a href="{% url 'dashboard' %}">Back To Dashboard</a>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Requests</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: #f4f7fb;
+        }
+
+        .navbar {
+            background: #1677b8;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .emergency-card {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            transition: 0.2s;
+            height: 100%;
+        }
+
+        .emergency-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.10);
+        }
+
+        .emergency-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #ffe5e5;
+            color: #dc3545;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .status-badge {
+            font-size: 13px;
+            padding: 7px 12px;
+            border-radius: 20px;
+        }
+
+        .status-assigned {
+            background: #dff6e8;
+            color: #198754;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #997404;
+        }
+
+        .status-processing {
+            background: #cfe2ff;
+            color: #084298;
+        }
+
+        .status-completed {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        .empty-box {
+            background: white;
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">🏥 Hospital Management
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-light"><i class="bi bi-arrow-left"></i>Dashboard</a>
+        </div>
+    </nav>
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="page-header mb-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h2 class="fw-bold mb-1">
+                        <i class="bi bi-heart-pulse text-danger"></i>
+                        Emergency Requests
+                    </h2>
+                    <p class="text-muted mb-0">View and manage your emergency requests
+                    </p>
+                </div>
+                {% if request.user.profile.Role == 'PATIENT' %}
+                <a href="{% url 'emergency_create' %}" class="btn btn-danger px-4">
+                    <i class="bi bi-plus-circle"></i>
+                    Create Emergency Request
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Emergency Requests -->
+        {% if emergencies %}
+        <div class="row g-4">
+            {% for emergency in emergencies %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card emergency-card">
+                    <div class="card-body p-4">
+                        <!-- Top -->
+                        <div class="d-flex justify-content-between align-items-start mb-4">
+                            <div class="emergency-icon">
+                                <i class="bi bi-heart-pulse-fill"></i>
+                            </div>
+                            {% if emergency.status == 'ASSIGNED' %}
+                            <span class="status-badge status-assigned">
+                                <i class="bi bi-check-circle"></i>
+                                {{ emergency.get_status_display }}
+                            </span>
+                            {% elif emergency.status == 'PENDING' %}
+                            <span class="status-badge status-pending">
+                                <i class="bi bi-clock"></i>
+                                {{ emergency.get_status_display }}
+                            </span>
+                            {% elif emergency.status == 'PROCESSING' %}
+                            <span class="status-badge status-processing">
+                                <i class="bi bi-arrow-repeat"></i>
+                                {{ emergency.get_status_display }}
+                            </span>
+                            {% elif emergency.status == 'COMPLETED' %}
+                            <span class="status-badge status-completed">
+                                <i class="bi bi-check2-all"></i>
+                                {{ emergency.get_status_display }}
+                            </span>
+                            {% elif emergency.status == 'CANCELLED' %}
+                            <span class="status-badge status-cancelled">
+                                <i class="bi bi-x-circle"></i>
+                                {{ emergency.get_status_display }}
+                            </span>
+                            {% endif %}
+                        </div>
+                        <!-- Emergency ID -->
+                        <h5 class="fw-bold mb-3">Emergency #{{ emergency.id }}</h5>
+                        <!-- Type -->
+                        <div class="mb-3">
+                            <small class="text-muted d-block">Emergency Type</small>
+                            <span class="fw-semibold">
+                                <i class="bi bi-exclamation-triangle text-warning"></i>
+                                {{ emergency.get_emergency_type_display }}
+                            </span>
+                        </div>
+                        <!-- Created -->
+                        <div class="mb-4">
+                            <small class="text-muted d-block">Created At</small>
+                            <span>
+                                <i class="bi bi-calendar3 text-primary"></i>
+                                {{ emergency.created_at|date:"M d, Y • h:i A" }}
+                            </span>
+                        </div>
+                        <!-- Button -->
+                        <a href="{% url 'emergency_detail' emergency.id %}" class="btn btn-outline-primary w-100">
+                            View Details
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Empty -->
+        <div class="empty-box">
+            <div class="display-3 text-muted mb-3">
+                <i class="bi bi-clipboard2-x"></i>
+            </div>
+            <h4 class="fw-bold">No Emergency Requests</h4>
+            <p class="text-muted">There are currently no emergency requests available.</p>
+            {% if request.user.profile.Role == 'PATIENT' %}
+            <a href="{% url 'emergency_create' %}" class="btn btn-danger">
+                <i class="bi bi-plus-circle"></i>
+                Create Emergency Request
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Patients</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">👥 My Patients</h2>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                Back Dashboard
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for emergency in emergencies %}
+            <div class="col-md-6">
+                <div class="card shadow-sm rounded-4">
+                    <div class="card-body">
+                        <h4>👤 {{ emergency.patient.patient_name }}</h4>
+                        <p class="text-muted">
+                            Emergency:
+                            <strong>{{ emergency.get_emergency_type_display }}</strong>
+                        </p>
+                        <hr>
+                        <p>
+                            ❤️ Oxygen:
+                            {{ emergency.oxygen_level }}%
+                        </p>
+                        <p>
+                            💓 Heart Rate:
+                            {{ emergency.heart_rate }} BPM
+                        </p>
+                        <p>
+                            🌡️ Temperature:
+                            {{ emergency.temperature }}
+                        </p>
+                        <p>
+                            🩺 Blood Pressure:
+                            {{ emergency.blood_pressure }}
+                        </p>
+
+                        {% with prediction=emergency.risk_predictions.last %}
+                        {% if prediction %}
+                        <div class="alert alert-warning">
+                            🤖 <strong>ML Risk Prediction</strong>
+                            <br>
+                            Risk:
+                            <strong>{{ prediction.risk_level }}</strong>
+                            <br>
+                            Probability:
+                            <strong>{{ prediction.probability }}%</strong>
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'emergency_detail' emergency.id %}" class="btn btn-primary">
+                                View Details
+                            </a>
+                            <a href="{% url 'add_treatment' emergency.id %}" class="btn btn-success">
+                                📝 Treatment
+                            </a>
+                            <a href="{% url 'create_prescription' emergency.id %}" class="btn btn-warning">
+                                💊 Prescription
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% empty %}
+
+            <div class="text-center">
+                <h4>No patients assigned</h4>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+
+</html>

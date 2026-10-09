@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Prescriptions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <!-- <h2 class="mb-4">💊 Prescriptions</h2> -->
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">💊 Create Prescription</h2>
+                <a href="{% url 'dashboard' %}" class="btn btn-primary">
+                    Back Dashboard
+                </a>
+            </div>
+            <div class="row g-4">
+                {% for prescription in prescriptions %}
+                <div class="col-md-6">
+                    <div class="card shadow-sm rounded-4">
+                        <div class="card-body">
+                            <h4>
+                                👤
+                                {{ prescription.patient.patient_name }}
+                            </h4>
+                            <p>
+                                👨‍⚕️ Doctor:
+                                {{ prescription.doctor.user.username }}
+                            </p>
+                            <p>
+                                🩺 Diagnosis:
+                                {{ prescription.diagnosis }}
+                            </p>
+                            <p class="text-muted">
+                                {{ prescription.created_at }}
+                            </p>
+                            <a href="{% url 'prescription_details' prescription.id %}" class="btn btn-primary">
+                                View Prescription
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {% empty %}
+                <div class="text-center">
+                    <h4>No prescriptions found.</h4>
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
