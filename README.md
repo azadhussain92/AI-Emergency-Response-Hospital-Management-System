@@ -13,14 +13,26 @@ A full-stack hospital management and emergency response application built using 
 - Machine learning-based emergency risk classification
 - REST API development with Django REST Framework
 
+## How It Works
+
+1. **User Authentication:** Patients, doctors, and hospital administrators log in according to their assigned roles.
+2. **Hospital Management:** Administrators manage hospitals, departments, doctors, and bed availability.
+3. **Appointment Scheduling:** Patients request appointments with doctors and track their appointment status.
+4. **Emergency Response:** Patients submit emergency requests, which authorized hospital staff can review and manage.
+5. **AI Risk Prediction:** The machine learning model estimates an emergency risk category using relevant patient information.
+6. **Prescription Management:** Doctors create prescriptions that can be stored and accessed by authorized users.
+7. **Medical Billing:** The system manages patient bills and payment status.
+8. **Admin Dashboard:** Administrators oversee hospital operations and manage system records.
+
 ## Tech Stack
 
 - **Backend:** Python, Django, Django REST Framework
 - **Database:** SQL / MySQL
 - **Frontend:** HTML, CSS, Bootstrap, JavaScript
 - **Machine Learning:** Emergency risk classification
-- 
+
 - ## System Workflow
+
 ```text
                     LOGIN
                       |
@@ -85,13 +97,46 @@ A full-stack hospital management and emergency response application built using 
 
 ## Installation
 
-1. Clone the repository.
-2. Create and activate a Python virtual environment.
-3. Install dependencies using `pip install -r requirements.txt`.
-4. Configure database settings and environment variables.
-5. Run migrations using `python manage.py migrate`.
-6. Start the development server using `python manage.py runserver`.
+1. Create and activate a virtual environment:
+
+   ```bash
+   python -m venv venv
+   ```
+
+   Windows:
+
+   ```bash
+   venv\Scripts\activate
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Configure database settings and required environment variables.
+
+4. Apply database migrations:
+
+   ```bash
+   python manage.py migrate
+   ```
+
+5. Start the development server:
+
+   ```bash
+   python manage.py runserver
+   ```
+
+6. Open `http://127.0.0.1:8000/` in your browser.
 
 ## Note
 
-Machine learning risk classification supports emergency prioritization and should not be treated as a substitute for professional medical judgment.
+Machine learning-based risk classification is intended to support emergency assessment and does not replace professional medical judgment. In real emergencies, qualified medical professionals must determine patient priority and treatment.
+
+## Author
+
+**Azad Hussain**
+
+GitHub: [azadhussain92](https://github.com/azadhussain92)
