@@ -27,7 +27,7 @@ A full-stack hospital management and emergency response application built using 
 ## Tech Stack
 
 - **Backend:** Python, Django, Django REST Framework
-- **Database:** SQL / MySQL
+- **Database:** MySQL
 - **Frontend:** HTML, CSS, Bootstrap, JavaScript
 - **Machine Learning:** Emergency risk classification
 
