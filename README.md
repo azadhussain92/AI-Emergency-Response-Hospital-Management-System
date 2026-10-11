@@ -120,6 +120,7 @@ A full-stack hospital management and emergency response application built using 
 4. Apply database migrations:
 
    ```bash
+   python manage.py makemigrations
    python manage.py migrate
    ```
 
@@ -131,12 +132,26 @@ A full-stack hospital management and emergency response application built using 
 
 6. Open `http://127.0.0.1:8000/` in your browser.
 
+
+### 🗄️ Database Setup
+
+This project uses MySQL as its database.
+
+1. Install MySQL Server.
+2. Create a database in MySQL.
+3. Update the database credentials in `settings.py`.
+4. Run the following commands:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
+**Note:** The database itself is not included in this repository. Tables are created using Django migrations.
 ## Note
+
 
 Machine learning-based risk classification is intended to support emergency assessment and does not replace professional medical judgment. In real emergencies, qualified medical professionals must determine patient priority and treatment.
 
-## Author
 
-**Azad Hussain**
 
-GitHub: [azadhussain92](https://github.com/azadhussain92)
