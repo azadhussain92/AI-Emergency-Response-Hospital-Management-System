@@ -94,6 +94,83 @@ A full-stack hospital management and emergency response application built using 
        BILL / PAYMENT STATUS
 ```
 
+<table>
+<tr>
+<td width="50%" valign="top">
+
+<h3 align="center">Hospital Management Workflow</h3>
+
+<pre>
+          LOGIN
+            |
+            v
+        DASHBOARD
+            |
+   +--------+--------+
+   |        |        |
+   v        v        v
+HOSPITAL PATIENT  DOCTOR
+MANAGEMENT MANAGEMENT MANAGEMENT
+   |        |        |
+   v        |        v
+HOSPITAL    |   APPOINTMENTS
+   |        |        |
+   +----+---+        v
+        |       PRESCRIPTION
+        v
+   DEPARTMENTS
+        |
+   +----+--------+
+   |    |        |
+   v    v        v
+EMERGENCY CARDIOLOGY NEUROLOGY
+        |
+        v
+  BED MANAGEMENT
+        |
+   +----+--------+
+   |    |        |
+   v    v        v
+ ICU-01 ICU-02 GENERAL-01
+</pre>
+
+</td>
+<td width="50%" valign="top">
+
+<h3 align="center">Emergency Response & Billing</h3>
+
+<pre>
+   EMERGENCY RESPONSE
+           |
+           v
+   EMERGENCY REQUEST
+           |
+           v
+    PATIENT DETAILS
+           |
+           v
+   AI RISK PREDICTION
+           |
+           v
+ DOCTOR / STAFF REVIEW
+           |
+           v
+  EMERGENCY MANAGEMENT
+
+
+      PRESCRIPTION
+           |
+           v
+   BILLING MANAGEMENT
+           |
+           v
+  BILL / PAYMENT STATUS
+</pre>
+
+</td>
+</tr>
+</table>
+
 
 ## Installation
 
